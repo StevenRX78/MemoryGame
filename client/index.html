@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Memory Game</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script
+      src="https://replit.com/public/js/replit-badge-v2.js"
+      theme="dark"
+      position="bottom-right"
+      defer
+    ></script>
+    <script type="module" src="script.js" defer></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Memory Game</h1>
+    </header>
+    <div id="alertBox">
+      <button>Restart</button>
+    </div>
+    <div id="timer">
+      <button id="start">Start</button>
+    </div>
+    <h2>Fastest Time: <span id="hi-result">999</span></h2>
+    <div id="form-wrap">
+      <form id="name">
+        <input name="user" id="user" type="text" placeholder="Input Name" />
+      </form>
+    </div>
+    <div id="score-wrap">
+      <div class="wrap-item item-left">
+        <h2>Timer: <span id="result"></span></h2>
+      </div>
+      <div class="wrap-item item-right">
+        <button id="leader">Leaderboard</button>
+      </div>
+    </div>
+    <div id="wrapper">
+      <!--populated by JS -->
+      <div id="grid">
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+        <div class="box"></div>
+        <!-- temp -->
+      </div>
+    </div>
+
+    <footer>
+      <p>Created by Danny, Jimmy, Riley and Steven.</p>
+    </footer>
+  </body>
+</html>
