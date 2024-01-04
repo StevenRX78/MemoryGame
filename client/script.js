@@ -11,8 +11,7 @@ const imageArray = [
 
 const numOfHieros = 8;
 const numOfCells = 16;
-const pauseTime = 200; // for matching pause
-let timer = 0;
+const pauseTime = 500; // for matching pause
 
 const blank = "./images/Hieroglyphs/blank.png";
 let currentTurn = []; // heiroglyph codes
@@ -23,10 +22,7 @@ let validTurn = true;
 let elapsed = 0;
 let start = 0;
 let username = null;
-let hideButton = document.getElementById("alertBox")
-hideButton.addEventListener("click", function (event) {
-  document.getElementById("alertBox").style.visibility = "hidden";
-});
+
 const leader = document.getElementById("leader");
 let cells = document.querySelectorAll(".box");
 
@@ -46,16 +42,13 @@ user.addEventListener("submit", function (event) {
 });
 
 // Set up the timer
-function setTimer() {
-  timer = setInterval(function () {
-    let now = getCurrentTime();
-    elapsed = getSecondsFromDifference(now - start);
-    outputTextByElementID(elapsed, "result");
-  }, 1000);
-}
+let timer = setInterval(function () {
+  let now = getCurrentTime();
+  elapsed = getSecondsFromDifference(now - start);
+  outputTextByElementID(elapsed, "result");
+}, 1000);
 
 function initialise() {
-  setTimer();
   currentTurn = []; // heiroglyph codes
   cellIDVals = []; // co-ordinates [0...15]
   gameArray = []; // id's 0...15, contains heiro's
@@ -108,7 +101,12 @@ function updateTurn(value) {
 // Used for when a cell has been clicked
 function drawSinglePiece(value) {
   let path = gameArray[value];
-  cells[value].style.backgroundImage = `url(${imageArray[path].img})`;
+  let prevWidth = cells[value].style.width;
+  cells[value].style.width = "0px";
+  setTimeout(function () {
+    cells[value].style.width = prevWidth;
+    cells[value].style.backgroundImage = `url(${imageArray[path].img})`;
+  }, 200);
 }
 
 // We can't immediately switch the tiles back to blank when there is no match,
@@ -162,9 +160,12 @@ function unlockFoundTiles() {
 
   for (let count = 0; count < 2; count++) {
     path = gameArray[cellIDVals[count]];
-    cells[
-      cellIDVals[count]
-    ].style.backgroundImage = `url(${imageArray[path].img})`;
+    setTimeout(function () {
+      cells[
+        cellIDVals[count]
+      ].style.backgroundImage = `url(${imageArray[path].img})`;
+      cells[cellIDVals[count]].style.filter = "brightness(60%)";
+    }, 400);
   }
 }
 
@@ -194,7 +195,7 @@ function shuffle(array) {
     let j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-  // array = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7];
+  array = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7];
   return array;
 }
 
@@ -214,7 +215,7 @@ function checkForEndOfGame(arr) {
   if (arr.length === numOfHieros) {
     let now = getCurrentTime();
 
-    document.getElementById("alertBox").style.visibility = "visible"; // Needs a pop up modal instead of an alert
+    alert("End of game!"); // Needs a pop up modal instead of an alert
 
     if (!username) {
       username = "N/A";
@@ -242,10 +243,24 @@ function troubleShoot() {
 }
 
 async function sendData(data) {
-  // https://memorygameserver.onrender.com
   await fetch("http://localhost:8080/leaderboard", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: `${JSON.stringify(data)}`,
   });
 }
+
+async function retrieveHighscore() {
+  let highScore = document.getElementById("hi-result");
+  const scores = await fetch("http://localhost:8080/leaderboard");
+  const json = await scores.json();
+  let highscores = [];
+  json.forEach((value) => {
+    highscores.push(value.score);
+  });
+  highscores.sort(function (a, b) {
+    return a - b;
+  });
+  highScore.innerText = `${highscores[0]}s`;
+}
+retrieveHighscore();
