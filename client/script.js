@@ -242,6 +242,7 @@ function troubleShoot() {
 }
 
 async function sendData(data) {
+  // https://memorygameserver.onrender.com
   await fetch("http://localhost:8080/leaderboard", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
