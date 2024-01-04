@@ -4,7 +4,7 @@
 
 
 <br>
-<br>
+
 ### User stories
 
 - As a user, I want to play a game that doesn't take a long time to play, as I do not have much leisure time.
