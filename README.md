@@ -14,7 +14,7 @@
 - As a user, I'd like to be able to play a memory game on my mobile device when I have some time to relax, after putting the world to rights on social media.
 
 
-### Fulfilment of user stories
+### Fulfillment of user stories
 
 The memory game solution was created to be a responsive design, that can be played on a variety of computing devices, from a computer with a large screen monitor to a mobile device with a restrictive display.
 
