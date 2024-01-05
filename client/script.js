@@ -160,11 +160,11 @@ function unlockFoundTiles() {
 
   for (let count = 0; count < 2; count++) {
     path = gameArray[cellIDVals[count]];
+    cells[cellIDVals[count]].style.filter = "brightness(60%)";
     setTimeout(function () {
       cells[
         cellIDVals[count]
       ].style.backgroundImage = `url(${imageArray[path].img})`;
-      cells[cellIDVals[count]].style.filter = "brightness(60%)";
     }, 400);
   }
 }
