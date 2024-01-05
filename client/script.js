@@ -20,11 +20,17 @@ let gameArray = []; // id's 0...15, contains heiro's
 let piecesFound = []; // The hiero id of the pieces found are in this array
 let validTurn = true;
 let elapsed = 0;
-let start = 0;
+let start = getCurrentTime();
 let username = null;
 
 const leader = document.getElementById("leader");
 let cells = document.querySelectorAll(".box");
+
+let hideButton = document.getElementById("alertBox");
+hideButton.addEventListener("click", function (event) {
+  document.getElementById("alertBox").style.visibility = "hidden";
+  initialise();
+});
 
 // This will also need triggering by a game reset button to restart the game.
 //
@@ -32,6 +38,7 @@ let cells = document.querySelectorAll(".box");
 
 let startButton = document.getElementById("start");
 startButton.addEventListener("click", function (event) {
+  document.getElementById("alertBox").style.visibility = "hidden";
   initialise();
 });
 
@@ -161,11 +168,11 @@ function unlockFoundTiles() {
   for (let count = 0; count < 2; count++) {
     path = gameArray[cellIDVals[count]];
     cells[cellIDVals[count]].style.filter = "brightness(60%)";
-    setTimeout(function () {
-      cells[
-        cellIDVals[count]
-      ].style.backgroundImage = `url(${imageArray[path].img})`;
-    }, 400);
+    // setTimeout(function () {
+    //   cells[
+    //     cellIDVals[count]
+    //   ].style.backgroundImage = `url(${imageArray[path].img})`;
+    // }, 400);
   }
 }
 
@@ -195,13 +202,14 @@ function shuffle(array) {
     let j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-  array = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7];
+  // array = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7];
   return array;
 }
 
 function drawBlankBoard() {
   for (let count = 0; count < numOfCells; count++) {
     cells[count].style.backgroundImage = `url(${blank})`;
+    cells[count].style.filter = "brightness(100%)";
   }
 }
 
@@ -215,7 +223,7 @@ function checkForEndOfGame(arr) {
   if (arr.length === numOfHieros) {
     let now = getCurrentTime();
 
-    alert("End of game!"); // Needs a pop up modal instead of an alert
+    document.getElementById("alertBox").style.visibility = "visible"; // Needs a pop up modal instead of an alert
 
     if (!username) {
       username = "N/A";
@@ -224,7 +232,6 @@ function checkForEndOfGame(arr) {
       name: username,
       score: getSecondsFromDifference(now - start),
     };
-
     sendData(returnObj);
 
     console.log(JSON.stringify(returnObj));
